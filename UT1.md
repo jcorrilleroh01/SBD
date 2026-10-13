@@ -36,31 +36,35 @@ Responde brevemente:
 Utilizando el dossier:
 
 1. Identifica **dos problemas de calidad** y explica sus consecuencias.
-    **Respuesta: Se puede llegar a la deduccion de problemas a largo plazo como algun contaminante en el  aire que pueda llegar a ser peligroso o probolemas de accion inmediata como incendios**
+    **Respuesta: Huecos temporales,esto hace que la medicion no sea todo lo precisa que necesitamos, al haber tiempo sin captar datos puede afectar a los datos y conclusiones sacadas al final ya que puedn llegar a ser erroneas por la falta de datos durante una franja diaria,al ser 30 minutos no afecta demasiado pero aun asi hay perdida de datos**
+    **Duplicados,esto hace engordar los registros y se puede asignar mas cuidados a una zona que no los precisa unicamente porque manda registros dobles**
 2. Indica qué **distrito** necesita mayor atención y justifica tu respuesta.
+    **D6 Parque Natural,ya que no tiene control ninguno, a pesar de ser una zona de vegetacion que precisa de cuidados mas intensivos que una calle cualquiera o una plaza, aunque tenga pocos habitantes dicha zona necesita un control ya que se trata de una reserva natural repleta de vegetacion que requiere muchos cuidados**
 3. Elige una **anomalía** y explica si la corregirías, la marcarías como dudosa o la excluirías.
+**Unidades incorrectas,no es una anomalia que afecte demasiado al sistema ya que unicamente se soluciona con un cambio de unidad,aunque si seria un gran problema si cada segundo entran muchas mediciones en farenheit en las cuales haya que hacer cambio de unidad,entonces entorpeceria el flujo demasiado innecesariamente**
 
 > **Nota:** No es necesario recalcular los datos. Debes interpretar las tablas.
-
+11
 ### 3. Comparar arquitecturas *(25 minutos)*
 
 Completa esta tabla:
 
 | Criterio                        | Batch | Streaming |
 |---------------------------------|-------|-----------|
-| Rapidez para generar alertas    |       |           |
-| Coste y complejidad             |       |           |
-| Informes históricos             |       |           |
-| Picos de datos                  |       |           |
+| Rapidez para generar alertas    |     Minutos u horas  |    Segundos o pocos minutos       |
+| Coste y complejidad             |   Menores    |   Mayores        |
+| Informes históricos             |  Muy adecuado     |       Adecuado, con más complejidad    |
+| Picos de datos                  |   Se tratan en el siguiente lote    |       Requieren ventanas y marcas de agua    |
 
 Indica qué alternativa usarías para las **alertas** y cuál para los **informes históricos**.
 
 ### 4. Elaborar una recomendación *(30 minutos)*
 
-Redacta una recomendación para el ayuntamiento que incluya:
 
-- [ ] El riesgo más urgente.
-- [ ] La actuación que propones.
-- [ ] Dos razones basadas en el dossier.
-- [ ] Un problema que seguiría pendiente.
-- [ ] Una medida de privacidad.
+- [x] **El riesgo más urgente:** D4 Sur Industrial tiene la mayor población, tráfico e industria, pero muy poca cobertura (2,8 sensores por 100.000 habitantes).
+- [x] **La actuación que propones:** Instalar más sensores en D4 y filtrar los datos erróneos antes de generar alertas. Las alertas se procesarían en streaming y los informes históricos en batch.
+- [x] **Dos razones basadas en el dossier:**
+    1. D4 tiene 180.000 habitantes y solo 5 sensores.
+    2. Hay 21 valores fuera de rango y 32 duplicados que pueden provocar alertas falsas.
+- [x] **Un problema que seguiría pendiente:** D6 Parque Natural sigue sin sensores.
+- [x] **Una medida de privacidad:** Guardar la ubicación de las estaciones móviles solo por zona, sin coordenadas exactas ni rutas.
