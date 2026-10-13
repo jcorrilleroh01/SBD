@@ -764,3 +764,4 @@ db.createUser({ user: "admin_catalogo", pwd: passwordPrompt(), roles: [{ role: "
 | Clientes | Se borran o anonimizan si lo piden (RGPD) o tras mucho tiempo inactivos; sus pedidos se conservan sin datos personales | Privacidad sin perder las estadísticas de ventas |
 
 ---
+![Estado final en Compass](estado-final.png)
