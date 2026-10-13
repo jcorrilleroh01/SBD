@@ -518,7 +518,7 @@ db.productos.find({
 | Etapa (`winningPlan`) | `COLLSCAN` + `SORT` | `IXSCAN` (sin `SORT`) |
 | `totalDocsExamined` | ≈ 5.000 (todos los productos) | ≈ 20 |
 | `totalKeysExamined` | 0 | ≈ 20 |
-| `executionTimeMillis` | **ANOTAR de la captura** | **ANOTAR de la captura** |
+| `executionTimeMillis` | 5 | 0 |
 
 **Conclusión:** sin índice, MongoDB revisa todos los productos y luego los ordena. Con el índice, va directo a los de la categoría y rango pedidos, ya ordenados, y se detiene al llegar a 20. Mismo resultado con mucho menos trabajo. *(Los valores "≈" se comprueban con las capturas y se ajustan si el número exacto es otro.)*
 
