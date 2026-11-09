@@ -89,34 +89,6 @@ La **canción** no es un actor, porque no hace nada por sí misma. Sin embargo, 
 
 ![Flujo](evidencias/flujo.png)
 
-Código Mermaid del diagrama:
-
-```mermaid
-flowchart LR
-    U(":Usuario")
-    A(":Artista")
-    C(":Cancion")
-    G(":Genero")
-    P(":Playlist")
-
-    U -->|"SIGUE_A<br/>desde"| U
-    U -->|"SIGUE_A<br/>desde"| A
-    U -->|"ESCUCHA<br/>veces, ultimaEscucha"| C
-    U -->|"CREA<br/>fecha"| P
-    P -->|"CONTIENE<br/>posicion, anadidaEl"| C
-    A -->|"INTERPRETA<br/>principal"| C
-    C -->|"PERTENECE_A"| G
-
-    classDef usuario fill:#1DB954,color:#fff
-    classDef artista fill:#E8115B,color:#fff
-    classDef cancion fill:#2D46B9,color:#fff
-    classDef otro fill:#F59B23,color:#fff
-    class U usuario
-    class A artista
-    class C cancion
-    class G,P otro
-```
-
 ### 2.1 Etiquetas y propiedades
 
 | Etiqueta | Obligatorias | Opcionales |
