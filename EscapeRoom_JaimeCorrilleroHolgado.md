@@ -2,7 +2,7 @@
 
 **Alumno:** Jaime Corrillero Holgado
 **Fecha:** 2026-11-10
-**Tabla consultada:** `EscapeRoomMinecraft` (Amazon DynamoDB, región `us-east-1`)
+**Tabla consultada:** `EscapeRoomMinecraft`
 
 ---
 
