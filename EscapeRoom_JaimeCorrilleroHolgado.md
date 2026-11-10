@@ -2,7 +2,8 @@
 
 **Alumno:** Jaime Corrillero Holgado
 **Fecha:** 2026-11-10
-**Tabla consultada:** `EscapeRoomMinecraft` 
+**Tabla consultada:** `EscapeRoomMinecraft` (Amazon DynamoDB, región `us-east-1`)
+
 ---
 
 ## Misión 1 · Los sospechosos
@@ -70,10 +71,10 @@ Como **Scan**. `zona` no es clave de la tabla ni tiene índice, así que DynamoD
 **Entregable: registros destacados en el castillo y la cámara**
 
 - **22:09:00** · AdminSol · `DEPOSITAR_OBJETO` · CamaraTesoro · `ESPADA_OMEGA`
-- **22:14** · NotchFan · `ABRIR_COFRE` · Castillo · `ESPADA_ACERO`
-- **22:14** · AdminSol · `INCIDENCIA_RED` · Castillo · detalle `PICO_LATENCIA_SERVIDOR`
-- **22:14** · LunaByte · `TIMEOUT_CONEXION` · Castillo · —
+- **22:14:00** · AdminSol · `INCIDENCIA_RED` · Castillo · detalle `PICO_LATENCIA_SERVIDOR`
+- **22:14:05** · LunaByte · `TIMEOUT_CONEXION` · Castillo · —
 - **22:14:10** · CreeperKing · `ENTRAR_ZONA` · CamaraTesoro · —
+- **22:14:51** · NotchFan · `ABRIR_COFRE` · Castillo · `ESPADA_ACERO`
 - **22:15:02** · CreeperKing · `ABRIR_COFRE` · CamaraTesoro · `ESPADA_OMEGA`
 - **22:15:18** · CreeperKing · `RETIRAR_OBJETO` · CamaraTesoro · `ESPADA_OMEGA`
 - **22:16:10** · CreeperKing · `SALIR_ZONA` · Castillo · —
@@ -89,7 +90,7 @@ SELECT * FROM "EscapeRoomMinecraft"
 WHERE fechaHora BETWEEN '2026-11-02T22:14:00' AND '2026-11-02T22:14:59'
 ```
 
-El fallo es real: a las 22:14 hay una incidencia registrada en el Castillo con el detalle `PICO_LATENCIA_SERVIDOR` (un pico de lag en el servidor). Quien sufrió la desconexión por timeout fue **LunaByte (P003)**.
+El fallo es real: a las **22:14:00** hay un evento `INCIDENCIA_RED` en el Castillo con el detalle `PICO_LATENCIA_SERVIDOR` (un pico de lag en el servidor). Quien sufrió la desconexión por timeout fue **LunaByte (P003)**, con el evento `TIMEOUT_CONEXION` a las **22:14:05**.
 
 **¿Qué jugador aprovechó los segundos de confusión del lag para entrar en la Cámara del Tesoro?**
 
@@ -106,11 +107,12 @@ El cofre se abrió a las **22:15:02** y la espada se retiró a las **22:15:18**.
 
 **Entregable: secuencia de 22:14 a 22:16**
 
-1. **22:14** · Pico de lag en el servidor y LunaByte (P003) se desconecta por timeout.
-2. **22:14:10** · Aprovechando la confusión, CreeperKing (P007) entra en la CamaraTesoro.
-3. **22:15:02** · CreeperKing abre el cofre de la Espada Omega.
-4. **22:15:18** · CreeperKing retira la Espada Omega.
-5. **22:16:10** · CreeperKing sale de la cámara hacia el Castillo.
+1. **22:14:00** · Pico de lag en el servidor (`INCIDENCIA_RED`).
+2. **22:14:05** · LunaByte (P003) se desconecta por timeout.
+3. **22:14:10** · Aprovechando la confusión, CreeperKing (P007) entra en la CamaraTesoro.
+4. **22:15:02** · CreeperKing abre el cofre de la Espada Omega.
+5. **22:15:18** · CreeperKing retira la Espada Omega.
+6. **22:16:10** · CreeperKing sale de la cámara hacia el Castillo.
 
 Causa y efecto: el fallo del servidor generó confusión y CreeperKing la aprovechó para robar la espada en poco más de un minuto.
 
@@ -226,7 +228,7 @@ La **MinaAbandonada**, donde la ocultó ShadowPixel a las 22:20:10.
 
 ## 1. Dictamen pericial
 
-El robo de la Espada Omega lo cometió **CreeperKing (P007)**. A las 22:14 hubo un pico de lag en el servidor que desconectó a LunaByte (P003). CreeperKing aprovechó esa confusión para entrar en la CamaraTesoro a las 22:14:10, abrió el cofre a las 22:15:02 y se llevó la espada a las 22:15:18. A las 22:17:40 se la entregó en el BosqueOscuro a su cómplice **ShadowPixel (P009)**, que la escondió en la MinaAbandonada a las 22:20:10. La denuncia oficial de AdminSol (P011) no llegó hasta las 22:25:00, diez minutos después del robo.
+El robo de la Espada Omega lo cometió **CreeperKing (P007)**. A las 22:14:00 hubo un pico de lag en el servidor que, a las 22:14:05, desconectó a LunaByte (P003). CreeperKing aprovechó esa confusión para entrar en la CamaraTesoro a las 22:14:10, abrió el cofre a las 22:15:02 y se llevó la espada a las 22:15:18. A las 22:17:40 se la entregó en el BosqueOscuro a su cómplice **ShadowPixel (P009)**, que la escondió en la MinaAbandonada a las 22:20:10. La denuncia oficial de AdminSol (P011) no llegó hasta las 22:25:00, diez minutos después del robo.
 
 ---
 
@@ -235,6 +237,8 @@ El robo de la Espada Omega lo cometió **CreeperKing (P007)**. A las 22:14 hubo 
 | Hora exacta (ISO) | ID Cuenta | Alias | Acción / Evento | Zona | Objeto y detalles clave |
 |---|---|---|---|---|---|
 | `2026-11-02T22:09:00` | `P011` | AdminSol | `DEPOSITAR_OBJETO` | `CamaraTesoro` | `ESPADA_OMEGA` (custodia inicial) |
+| `2026-11-02T22:14:00` | `P011` | AdminSol | `INCIDENCIA_RED` | `Castillo` | Detalle `PICO_LATENCIA_SERVIDOR` (fallo del servidor) |
+| `2026-11-02T22:14:05` | `P003` | LunaByte | `TIMEOUT_CONEXION` | `Castillo` | Desconexión por timeout |
 | `2026-11-02T22:14:10` | `P007` | CreeperKing | `ENTRAR_ZONA` | `CamaraTesoro` | Entra durante el lag del servidor |
 | `2026-11-02T22:15:02` | `P007` | CreeperKing | `ABRIR_COFRE` | `CamaraTesoro` | `ESPADA_OMEGA` |
 | `2026-11-02T22:15:18` | `P007` | CreeperKing | `RETIRAR_OBJETO` | `CamaraTesoro` | `ESPADA_OMEGA` (robo físico) |
